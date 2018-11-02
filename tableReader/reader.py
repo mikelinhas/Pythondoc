@@ -2,8 +2,9 @@ def say_hello():
 	print("Hello")
 
 # FUNCION PARA LEER LA UNA TABLA NORMAL
-def tablaNormal(nombre, table):
+def tablaNormal(table):
 	rows = table.find_all("tr")
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -14,13 +15,17 @@ def tablaNormal(nombre, table):
 		else:
 			quantity = int(cols[1].get_text())
 
-		print(nombre, descripcion, ": ", quantity)
+		item = [descripcion, quantity]
+		result.append(item)
+		print(descripcion, ": ", quantity)
 
+	return result
 
 # FUNCION PARA LEER LA UNA TABLA HORIZONTAL SIMPLE
-def tablaHorizontal(nombre, codigo, table):
+def tablaHorizontal(codigo, table):
 	rows = table.find_all("tr")
 	cols_num = len(rows[0].find_all("td"))
+	result = []
 
 	for x in range(0,cols_num):
 		DNs = rows[0].find_all("td")
@@ -34,17 +39,24 @@ def tablaHorizontal(nombre, codigo, table):
 
 		if int(DN)<100:
 			cod_baviera = codigo + '0' + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
+			result.append(item)
+			#print(cod_baviera, ": ", quantity)
 			
 		else:
 			cod_baviera = codigo + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
+			result.append(item)
+			#print(cod_baviera, ": ", quantity)
 
+	return result
 
 # FUNCION PARA LEER LA UNA TABLA CON CODIGO EN LA 3a COLUMNA
-def tablaCodigo3(nombre, table):
+def tablaCodigo3(table):
 	rows = table.find_all("tr")
 	rows.pop(0)
+
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -55,13 +67,18 @@ def tablaCodigo3(nombre, table):
 		else:
 			quantity = int(cols[3].get_text())
 
-		print(nombre, cod_baviera, ": ", quantity)
+		item = [cod_baviera, quantity]
+		result.append(item)
+		#print(cod_baviera, ": ", quantity)
 
+	return result
 
 # FUNCION PARA LEER LA UNA TABLA CON CODIGO EN LA 4a COLUMNA
-def tablaCodigo4(nombre, table):
+def tablaCodigo4(table):
 	rows = table.find_all("tr")
 	rows.pop(0)
+
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -72,11 +89,14 @@ def tablaCodigo4(nombre, table):
 		else:
 			quantity = int(cols[4].get_text())
 
-		print(nombre, cod_baviera, ": ", quantity)
+		item = [cod_baviera, quantity]
+		result.append(item)
+		#print(cod_baviera, ": ", quantity)
 
+	return result
 
 # FUNCION PARA LEER LOS TORNILLOS
-def tornillos(nombre, codigo, table):
+def tornillos(codigo, table):
 	rows = table.find_all("tr")
 
 	for row in rows:
@@ -90,16 +110,16 @@ def tornillos(nombre, codigo, table):
 
 		if len(Metric) == 6:
 			cod_baviera = codigo + Metric[1:3] + "0" + Metric[4:6]
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 		elif len(Metric) == 7:
 			cod_baviera = codigo + Metric[1:3] + Metric[4:7]
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 		else:
-			print(nombre, "WTF?")
+			print("WTF?")
 
 
 # FUNCION PARA LEER LAS TUERCAS
-def tuercas(nombre, codigo, table):
+def tuercas(codigo, table):
 	rows = table.find_all("tr")
 
 	for row in rows:
@@ -112,11 +132,11 @@ def tuercas(nombre, codigo, table):
 		else:
 			quantity = int(cols[1].get_text())
 		
-		print(nombre, cod_baviera, ": ", quantity)
+		print(cod_baviera, ": ", quantity)
 
 
 # FUNCION PARA LEER LA TABLA DE LAS VALVULAS MANUALES CON BRIDAS
-def valvulasManualesBridas(nombre, codigos, table):
+def valvulasManualesBridas(codigos, table):
 
 	ari = codigos[0]
 	chero = codigos[1]
@@ -139,16 +159,16 @@ def valvulasManualesBridas(nombre, codigos, table):
 
 		if descripcion == "ari":
 			cod_baviera = ari + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 		elif descripcion == "chero":
 			cod_baviera = chero + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 		else:
 			print(descripcion, ": ", quantity)
 			
 
 # FUNCION PARA LEER LA TABLA DE LAS VALVULAS MANUALES ROSCADAS
-def valvulasManualesRoscadas(nombre, codigos, table):
+def valvulasManualesRoscadas(codigos, table):
 
 	chero = codigos[0]
 
@@ -170,13 +190,13 @@ def valvulasManualesRoscadas(nombre, codigos, table):
 
 		if descripcion == "chero":
 			cod_baviera = chero + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 		else:
 			print(descripcion, ": ", quantity)
 
 
 # FUNCION PARA LEER LA TABLA DE LAS VALVULAS DE BOLA NPT
-def valvulasBolaNPT(nombre, codigos, table):
+def valvulasBolaNPT(codigos, table):
 
 	rk = codigos[0]
 
@@ -198,13 +218,13 @@ def valvulasBolaNPT(nombre, codigos, table):
 
 		if descripcion == "rk":
 			cod_baviera = rk + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 		else:
 			print(descripcion, ": ", quantity)
 
 
 # FUNCION PARA LEER LA TABLA DE LAS REDUCCIONES
-def reducciones(nombre, codigo, table):
+def reducciones(codigo, table):
 
 	rows = table.find_all("tr")
 
@@ -221,20 +241,20 @@ def reducciones(nombre, codigo, table):
 			DN1 = DNxDN[4:7]
 			DN2 = DNxDN[9:]
 			cod_baviera = codigo + "0" + DN2 + DN1
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif len(DNxDN) == 12:
 			DN1 = DNxDN[4:7]
 			DN2 = DNxDN[9:]
 			cod_baviera = codigo + DN2 + DN1
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 
 		elif len(DNxDN) == 12:
 			DN1 = DNxDN[4:8]
 			DN2 = DNxDN[10:]
 			cod_baviera = codigo + "0" + DN2 + "A"
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 
 		else:
@@ -242,7 +262,7 @@ def reducciones(nombre, codigo, table):
 
 
 # FUNCION PARA LEER LA TABLA DE LOS ACCESORIOS NPT
-def accesorioNPT(nombre, table):
+def accesorioNPT(table):
 
 	rows = table.find_all("tr")
 
@@ -259,39 +279,39 @@ def accesorioNPT(nombre, table):
 
 		if descripcion.lower() == "manguito":
 			cod_baviera = "AACM3NA0" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif descripcion.lower() == "medio manguito":
 			cod_baviera = "AACCMMN3" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif descripcion.lower() == "t":
 			cod_baviera = "AACTIN30" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif descripcion.lower() == "codo h-h":
 			cod_baviera = "AACCN3B0" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif descripcion.lower() == "codo m-h":
 			cod_baviera = "AACCN3A0" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif descripcion.lower() == "machon doble" or descripcion.lower() == "machón doble":
 			cod_baviera = "AACMDN30" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif descripcion.lower() == "tuerca union" or descripcion.lower() == "tuerca unión":
 			cod_baviera = "AFRTU3N0" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif descripcion.lower() == "tapon macho" or descripcion.lower() == "tapón macho":
 			cod_baviera = "AACTP3A0" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		elif descripcion.lower() == "tapon hembra" or descripcion.lower() == "tapón hembra":
 			cod_baviera = "AACTP3B0" + DN
-			print(nombre, cod_baviera, ": ", quantity)
+			print(cod_baviera, ": ", quantity)
 
 		else:
 			print(descripcion, descripcion2, ": ", quantity)
