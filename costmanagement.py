@@ -2,8 +2,6 @@ import mammoth
 from bs4 import BeautifulSoup
 from tableReader import reader
 import xlwt
-
-# Esto es para el GUI pero yo lo cambiaría porque es horribla
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
@@ -21,7 +19,6 @@ error = "está mal formateado el documento prim"
 
 
 # TRADUCCIONES
-
 ABRAZADERAS = "AFRABN0" # DN "xxx"
 BRIDAS = "AACBCU0" # DN "xxx"
 BRIDAS_CIEGAS = "AACBCI0" # DN "xxx"
@@ -197,4 +194,4 @@ for item in excelData:
 	ws.write(x,0,item[0])
 	ws.write(x,1,item[1])
 
-wb.save("Material List.xlsx")
+wb.save("Material List.xls")

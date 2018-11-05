@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['costmanagement.py'],
-             pathex=['/home/zarco/apps/Pythondoc'],
+             pathex=['C:\\apps\\Pythondoc'],
              binaries=[],
              datas=[],
              hiddenimports=[],
