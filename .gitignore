@@ -1,1 +1,5 @@
 ejemplos
+dist
+build
+__pycache__
+tableReader/__pycache__/

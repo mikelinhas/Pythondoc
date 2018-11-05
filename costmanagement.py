@@ -1,6 +1,7 @@
 import mammoth
 from bs4 import BeautifulSoup
 from tableReader import reader
+import xlwt
 
 # Esto es para el GUI pero yo lo cambiaría porque es horribla
 from tkinter import Tk
@@ -39,6 +40,10 @@ VALVULA_CHERO_ROSCADA = "AVLMRA0" # DN "xxx"
 VALVULA_RK_ROSCADA = "xxCODIGOxx" # DN "xxx"
 
 OTROS = []
+
+
+# PREPARAR DATOS PARA DOCUMENTO EXCEL
+excelData = []
 
 for heading in soup.find_all("h1"):
 	h1_text = heading.get_text()
@@ -171,8 +176,25 @@ for heading in soup.find_all("h1"):
 
 
 	else:
+		result = []
 		OTROS.append(h1_text)
+
+	excelData.extend(result)
 
 print(OTROS)
 
 
+# PREPARE THE EXCEL
+wb = xlwt.Workbook()
+ws = wb.add_sheet("Lista de material")
+x = 0
+
+ws.write(x, 0, "REFERENCIA BAVIERA")
+ws.write(x, 1, "CANTIDAD")
+
+for item in excelData:
+	x = x+1
+	ws.write(x,0,item[0])
+	ws.write(x,1,item[1])
+
+wb.save("Material List.xlsx")
