@@ -4,6 +4,7 @@ def say_hello():
 # FUNCION PARA LEER LA UNA TABLA NORMAL
 def tablaNormal(table):
 	rows = table.find_all("tr")
+	
 	result = []
 
 	for row in rows:
@@ -17,7 +18,6 @@ def tablaNormal(table):
 
 		item = [descripcion, quantity]
 		result.append(item)
-		print(descripcion, ": ", quantity)
 
 	return result
 
@@ -99,6 +99,8 @@ def tablaCodigo4(table):
 def tornillos(codigo, table):
 	rows = table.find_all("tr")
 
+	result = []
+
 	for row in rows:
 		cols = row.find_all("td")
 		Metric = cols[0].get_text()
@@ -110,17 +112,23 @@ def tornillos(codigo, table):
 
 		if len(Metric) == 6:
 			cod_baviera = codigo + Metric[1:3] + "0" + Metric[4:6]
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 		elif len(Metric) == 7:
 			cod_baviera = codigo + Metric[1:3] + Metric[4:7]
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 		else:
 			print("WTF?")
+			return "error"
 
+		result.append(item)
+
+	return result
 
 # FUNCION PARA LEER LAS TUERCAS
 def tuercas(codigo, table):
 	rows = table.find_all("tr")
+
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -129,11 +137,14 @@ def tuercas(codigo, table):
 
 		if not cols[1].get_text():
 			quantity = 0
+			item = [cod_baviera, quantity]
 		else:
 			quantity = int(cols[1].get_text())
-		
-		print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
+		result.append(item)
+
+	return result
 
 # FUNCION PARA LEER LA TABLA DE LAS VALVULAS MANUALES CON BRIDAS
 def valvulasManualesBridas(codigos, table):
@@ -143,6 +154,8 @@ def valvulasManualesBridas(codigos, table):
 
 	rows = table.find_all("tr")
 	rows.pop(0)
+
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -159,13 +172,18 @@ def valvulasManualesBridas(codigos, table):
 
 		if descripcion == "ari":
 			cod_baviera = ari + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
+
 		elif descripcion == "chero":
 			cod_baviera = chero + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
+
 		else:
-			print(descripcion, ": ", quantity)
-			
+			print("error", descripcion, ": ", quantity)
+		
+		result.append(item)
+
+	return result	
 
 # FUNCION PARA LEER LA TABLA DE LAS VALVULAS MANUALES ROSCADAS
 def valvulasManualesRoscadas(codigos, table):
@@ -174,6 +192,8 @@ def valvulasManualesRoscadas(codigos, table):
 
 	rows = table.find_all("tr")
 	rows.pop(0)
+
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -190,10 +210,13 @@ def valvulasManualesRoscadas(codigos, table):
 
 		if descripcion == "chero":
 			cod_baviera = chero + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 		else:
-			print(descripcion, ": ", quantity)
+			print("error", descripcion, ": ", quantity)
 
+		result.append(item)
+
+	return result
 
 # FUNCION PARA LEER LA TABLA DE LAS VALVULAS DE BOLA NPT
 def valvulasBolaNPT(codigos, table):
@@ -202,6 +225,8 @@ def valvulasBolaNPT(codigos, table):
 
 	rows = table.find_all("tr")
 	rows.pop(0)
+
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -218,15 +243,20 @@ def valvulasBolaNPT(codigos, table):
 
 		if descripcion == "rk":
 			cod_baviera = rk + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 		else:
-			print(descripcion, ": ", quantity)
+			print("error", descripcion, ": ", quantity)
 
+		result.append(item)
+
+	return result
 
 # FUNCION PARA LEER LA TABLA DE LAS REDUCCIONES
 def reducciones(codigo, table):
 
 	rows = table.find_all("tr")
+
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -241,30 +271,35 @@ def reducciones(codigo, table):
 			DN1 = DNxDN[4:7]
 			DN2 = DNxDN[9:]
 			cod_baviera = codigo + "0" + DN2 + DN1
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif len(DNxDN) == 12:
 			DN1 = DNxDN[4:7]
 			DN2 = DNxDN[9:]
 			cod_baviera = codigo + DN2 + DN1
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 
 		elif len(DNxDN) == 12:
 			DN1 = DNxDN[4:8]
 			DN2 = DNxDN[10:]
 			cod_baviera = codigo + "0" + DN2 + "A"
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 
 		else:
-			print(descripcion, ": ", quantity)
+			return ("error", DNxDN)
+
+		result.append(item)
+
+	return result
 
 
 # FUNCION PARA LEER LA TABLA DE LOS ACCESORIOS NPT
 def accesorioNPT(table):
 
 	rows = table.find_all("tr")
+	result = []
 
 	for row in rows:
 		cols = row.find_all("td")
@@ -279,39 +314,43 @@ def accesorioNPT(table):
 
 		if descripcion.lower() == "manguito":
 			cod_baviera = "AACM3NA0" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif descripcion.lower() == "medio manguito":
 			cod_baviera = "AACCMMN3" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif descripcion.lower() == "t":
 			cod_baviera = "AACTIN30" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif descripcion.lower() == "codo h-h":
 			cod_baviera = "AACCN3B0" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif descripcion.lower() == "codo m-h":
 			cod_baviera = "AACCN3A0" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif descripcion.lower() == "machon doble" or descripcion.lower() == "machón doble":
 			cod_baviera = "AACMDN30" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif descripcion.lower() == "tuerca union" or descripcion.lower() == "tuerca unión":
 			cod_baviera = "AFRTU3N0" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif descripcion.lower() == "tapon macho" or descripcion.lower() == "tapón macho":
 			cod_baviera = "AACTP3A0" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		elif descripcion.lower() == "tapon hembra" or descripcion.lower() == "tapón hembra":
 			cod_baviera = "AACTP3B0" + DN
-			print(cod_baviera, ": ", quantity)
+			item = [cod_baviera, quantity]
 
 		else:
-			print(descripcion, descripcion2, ": ", quantity)
+			item = [descripcion + " " + descripcion2, quantity]
+
+		result.append(item)
+
+	return result
